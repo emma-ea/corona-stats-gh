@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'pages/home_page.dart';
+import 'pages/main_page.dart';
 import 'pages/displacement_menu.dart';
 
 void main() => runApp(MyApp());
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       home: Stack(
         children: <Widget>[
           DisplacementMenu(),
-          HomePage(),
+          MainPage(),
         ],
       ),
     );
