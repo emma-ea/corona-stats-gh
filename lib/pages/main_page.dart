@@ -12,7 +12,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
 
-  int _bottomNavCurrentIndex = 1;
+  int _currentPageIndex = 0;
   PageController _controller = PageController();
 
   @override
@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
         controller: _controller,
         onPageChanged: (index) {
           setState(() {
-            _bottomNavCurrentIndex = index;
+            _currentPageIndex = index;
           });
         },
         children: <Widget>[
@@ -54,7 +54,7 @@ class _MainPageState extends State<MainPage> {
         unselectedItemColor: Color(0xffbdc3c7),
         selectedItemColor: Color(0xFF2C3E50),
         showUnselectedLabels: false,
-        currentIndex: _bottomNavCurrentIndex,
+        currentIndex: _currentPageIndex,
         type: BottomNavigationBarType.shifting,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
@@ -64,7 +64,7 @@ class _MainPageState extends State<MainPage> {
         ],
         onTap: (index){
           setState(() {
-            _bottomNavCurrentIndex = index;
+            _currentPageIndex = index;
             _controller.animateToPage(index, duration: Duration(milliseconds: 500), curve: Curves.ease);
           });
         },
