@@ -14,7 +14,7 @@ class AboutInfo {
 
   String _preventionTitle = "Prevention";
 
-  String _preventionDetail = "There is no vaccine to protect against this family of viruses. Reduce your risk of infection by\nWash your hands with soap and water before touching anything including your eyes, nose and mouth\nCover your mouth and nose when you cough or sneeze\nDisinfect the objects and surfaces you touch.\nIf you are sick, stay home and avoid crowds and contact with others.";
+  String _preventionDetail = "There is no vaccine to protect against this family of viruses. Reduce your risk of infection by\n\nWash your hands with soap and water before touching anything including your eyes, nose and mouth\nCover your mouth and nose when you cough or sneeze\nDisinfect the objects and surfaces you touch.\nIf you are sick, stay home and avoid crowds and contact with others.";
 
   String _treatmentTitle = "Treatment";
 
