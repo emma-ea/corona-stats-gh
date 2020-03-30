@@ -7,12 +7,34 @@ import 'scoped_model/model.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+
+  _MyAppState createState() => _MyAppState();
+
+}
+
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin{
 
   final DataModel _model = DataModel();
+  AnimationController _controller;
+
+  int maxSlide = 43;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+    );
+  }
+
+  void Toggle() => _controller.isDismissed ? _controller.forward() : _controller.reverse();
 
   @override
   Widget build(BuildContext context) {
+    double slide = maxSlide * _controller.value;
+    double scale = 1 - (_controller.value * 0.3);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -21,12 +43,24 @@ class MyApp extends StatelessWidget {
       ),
       home: ScopedModel<DataModel>(
         model: _model,
-        child: Stack(
-        children: <Widget>[
-          DisplacementMenu(),
-          MainPage(_model),
-        ],
-      ),
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, _) {
+            return Stack(
+          children: <Widget>[
+            DisplacementMenu(),
+            Transform(
+              transform: Matrix4.identity()
+              ..scale(scale)
+              ..translate(slide),
+              alignment: Alignment.centerLeft,
+              child: MainPage(_model),
+            ),
+          ],
+      );
+          }
+                
+        ),
       ), 
     );
   }

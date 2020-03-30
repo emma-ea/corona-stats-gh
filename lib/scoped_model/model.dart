@@ -11,7 +11,21 @@ class DataModel extends Model {
   bool _isLoading = false;
   List<CasesModel> _cases = [];
 
+  String _timedOutText = '';
+
+  bool _isToggle = false;
+
+  bool toggleSetter() {
+    if (_isToggle) {
+      return !_isToggle;
+    }
+    return _isToggle;
+  }
+  bool get isToggleState => _isToggle;
+
   bool get isLoading => _isLoading;
+
+  String get timeOutText => _timedOutText;
 
   List<CasesModel> get getAllCases {
     return List.from(_cases);
@@ -50,11 +64,19 @@ class DataModel extends Model {
      });
       _cases = casesModelData;
       print(_cases[_cases.length-1].casesToday);
+      _timedOutText = '';
       _isLoading = false;
       notifyListeners();
       return;
     }).catchError((onError) {
+      print('error occured.');
       print(onError);
+      _timedOutText = 'An error occured while trying to access endpoint.';
+      _isLoading = false;
+      notifyListeners();
+      return;
+    }).timeout(Duration(seconds: 60), onTimeout: () {
+      _timedOutText = 'Connection Timeout. Please Check internet';
       _isLoading = false;
       notifyListeners();
       return;

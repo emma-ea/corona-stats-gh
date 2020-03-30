@@ -209,14 +209,29 @@ class _HomeState extends State<Home> {
     );
   }
 
+  Widget _imagerLoader(BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+        if (loadingProgress == null)
+          return child;
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: CircularProgressIndicator(
+              value: loadingProgress.expectedTotalBytes != null
+                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes
+                  : null,
+            ),
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScopedModelDescendant(
         builder: (BuildContext context, Widget child, DataModel model) {
-      Widget page = Container(child: Center(child: Text("Getting data...")));
+      Widget page = Container(child: Center(child: Text("Failed to get data..."),),);
       if (model.isLoading) {
-        return page;
-      } else {
+        return Center( child: CircularProgressIndicator(backgroundColor: Color(0xffc0392b),));
+      }  else if ( !model.isLoading && model.currentCase.totalCases > 0) {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,15 +273,18 @@ class _HomeState extends State<Home> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: <Widget>[
-                    Image.network(img1),
-                    Image.network(img2),
-                    Image.network(img3),
+                    Image.network(img1, loadingBuilder: _imagerLoader,),
+                    Image.network(img2, loadingBuilder: _imagerLoader, ),
+                    Image.network(img3, loadingBuilder: _imagerLoader, ),
                   ],
                 ),
               )
             ],
           ),
         );
+      }
+      else {
+        return page;
       }
     });
   }

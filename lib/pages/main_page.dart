@@ -39,7 +39,10 @@ class _MainPageState extends State<MainPage> {
             width: 34.0,
             height: 34.0,
           ),
-          onPressed: () {},
+          onPressed: () {
+            widget._model.toggleSetter();
+            print('menu toggled: ${widget._model.isToggleState}');
+          },
         ),
         title: RichText(
           text: TextSpan(children: [

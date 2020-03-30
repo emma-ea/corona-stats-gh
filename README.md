@@ -6,6 +6,6 @@ App for tracking corona virus cases in ghana.
 
 If you're familiar with github. Simply fork and clone repo.
 
-App is still in development. PR for with features will be considered.
+App is still in development. PR with features will be considered.
 
 If any bugs , Please file an issue.
