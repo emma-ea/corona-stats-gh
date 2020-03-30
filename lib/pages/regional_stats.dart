@@ -27,7 +27,9 @@ class _RegionalStatsState extends State<RegionalStats> {
     return Sparkline(
       data: data,
       pointsMode: PointsMode.all,
-      pointSize: 8.0,
+      pointSize: 2.0,
+      fillMode: FillMode.below,
+      pointColor: Color(0xffc0392b),
     );
   }
 
@@ -35,8 +37,13 @@ class _RegionalStatsState extends State<RegionalStats> {
     return Container(
       height: 300,
       width: MediaQuery.of(context).size.width/2,
-      decoration: BoxDecoration(color: Color(0xff34495e), borderRadius: BorderRadius.circular(12.0),),
-      child: Column(),
+      decoration: BoxDecoration(color: Color(0xffecf0f1), borderRadius: BorderRadius.circular(12.0),),
+      child: Column(
+        children: <Widget>[
+          //Text('Region: Accra', style: TextStyle(color: Colors.white)),
+          //Text('Recorded Cases: '),
+        ],
+      ),
     );
   }
 
@@ -53,6 +60,8 @@ class _RegionalStatsState extends State<RegionalStats> {
             SizedBox(
               height: 20.0,
             ),
+            Text('Cases Growth Rate', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+            SizedBox(height: 10.0,),
             Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
@@ -65,7 +74,7 @@ class _RegionalStatsState extends State<RegionalStats> {
               }),
             ),
             Text(
-                '*Chart Shows Relation Between Days(Vertical) and Cases(Horizontal)',
+                '*Chart Shows Growth Rate of Cases Since 17th March 2020 00:00:00',
                 style: TextStyle(
                   fontSize: 13.0,
                   color: Colors.black,

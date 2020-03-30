@@ -11,6 +11,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+
+  String img1 = 'https://www.who.int/images/default-source/health-topics/coronavirus/safe-greetings.png';
+  String img2 = 'https://www.who.int/images/default-source/health-topics/coronavirus/handshaking.png';
+  String img3 = 'https://www.who.int/images/default-source/health-topics/coronavirus/wearing-gloves.png';
+
   Widget _buildTotalCases(CasesModel caseData) {
     String cases = NumberFormat().format(caseData.totalCases).toString();
     String timeDate = caseData.timeStamp.replaceFirst(new RegExp(r'T'), ' Time: ');
@@ -224,6 +229,41 @@ class _HomeState extends State<Home> {
                 height: 10.0,
               ),
               _buildOtherStats(model.currentCase),
+              SizedBox(
+                height: 20.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+                child: Text('Emergency Lines:', style: TextStyle( color: Color(0xffc0392b), fontWeight: FontWeight.bold, fontSize: 20.0),),
+              ),
+              SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    ListTile(leading: Icon(Icons.call,), title: Text('112'),),
+                    ListTile(leading: Icon(Icons.call,), title: Text('+233 55 843 9868'),),
+                    ListTile(leading: Icon(Icons.call,), title: Text('+233 50 949 7700'),),
+            
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0,),
+                child: Text('Advice from the World Health Organisation', style: TextStyle( fontWeight: FontWeight.bold, fontSize: 20.0),),
+              ),
+              SizedBox(height: 10,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: <Widget>[
+                    Image.network(img1),
+                    Image.network(img2),
+                    Image.network(img3),
+                  ],
+                ),
+              )
             ],
           ),
         );
