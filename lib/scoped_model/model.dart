@@ -15,11 +15,8 @@ class DataModel extends Model {
 
   bool _isToggle = false;
 
-  bool toggleSetter() {
-    if (_isToggle) {
-      return !_isToggle;
-    }
-    return _isToggle;
+  void toggleSetter() {
+    _isToggle = !_isToggle;
   }
   bool get isToggleState => _isToggle;
 
@@ -33,6 +30,13 @@ class DataModel extends Model {
 
   CasesModel get currentCase {
     return _cases[_cases.length-1];
+  }
+
+  Future<Null> getLastest() {
+    print('latest');
+    _isLoading = true;
+    notifyListeners();
+    return null;
   }
 
   Future<Null> fetchData() {

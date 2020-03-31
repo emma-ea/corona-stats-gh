@@ -25,6 +25,58 @@ class _MainPageState extends State<MainPage> {
     widget._model.fetchData();
   }
 
+  _showDialogBuilder(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            title: Text('About this Data'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'It changes rapidly',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    'This data changes rapidly, so what’s shown may be out of date. Table totals may not always represent an accurate sum. Information about reported cases is also available on the World Health Organisation site.',
+                    textAlign: TextAlign.justify,
+                  ),
+                  SizedBox(height: 12.0),
+                  Text(
+                    'It doesn’t include all cases',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  Text(
+                    'Confirmed cases aren’t all cases. They only include people who tested positive. Testing rules and availability vary by country',
+                    textAlign: TextAlign.justify,
+                  ),
+                ],
+              ),
+            ),
+            elevation: 3.0,
+            actions: <Widget>[
+              FlatButton(
+                child: Text('close'),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +131,7 @@ class _MainPageState extends State<MainPage> {
               width: 30.0,
               height: 30.0,
             ),
-            onPressed: () {},
+            onPressed: () => _showDialogBuilder(context),
           ),
         ],
       ),
