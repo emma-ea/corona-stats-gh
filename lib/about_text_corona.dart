@@ -20,6 +20,26 @@ class AboutInfo {
 
   String _treatmentDetail = "There is no specific treatment. Most of the time, symptoms will go away on their own.\nDoctors can relieve symptoms by prescribing a pain or fever medication.\nA room humidifier or a hot shower can help with a sore throat or cough.\nDrink plenty of fluids.\nGet rest and sleep as much as possible.\nIf symptoms feel worse than a standard cold, see your doctor";
 
+  String _aboutData = 'About this Data';
+
+  String _aboutTitle1 = 'It changes rapidly';
+
+  String _aboutTitle2 = 'It doesn\'t include all cases';
+
+  String _aboutBody1 = 'This data changes rapidly, so what’s shown may be out of date. Table totals may not always represent an accurate sum. Information about reported cases is also available on the World Health Organisation site.';
+
+  String _aboutBody2 = 'Confirmed cases aren’t all cases. They only include people who tested positive. Testing rules and availability vary by country.';
+
+  String get aboutData => _aboutData;
+
+  String get aboutTitle1 => _aboutTitle1;
+
+  String get aboutTitle2 => _aboutTitle2;
+
+  String get aboutBody1 => _aboutBody1;
+
+  String get aboutBody2 => _aboutBody2;
+
   String get headerTitle => _headerTitle;
 
   String get headerDetail => _headerDetail;

@@ -6,6 +6,8 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import '../scoped_model/model.dart';
 import '../model/data_model.dart';
+import '../scrapper/scrape_page.dart';
+import '../scoped_model/main.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -19,6 +21,8 @@ class _HomeState extends State<Home> {
       'https://www.who.int/images/default-source/health-topics/coronavirus/handshaking.png';
   String img3 =
       'https://www.who.int/images/default-source/health-topics/coronavirus/wearing-gloves.png';
+
+  ScrapePage scrapePage = ScrapePage();
 
   Widget _buildTotalCases(CasesModel caseData) {
     String cases = NumberFormat().format(caseData.totalCases).toString();
@@ -232,99 +236,181 @@ class _HomeState extends State<Home> {
 
   void _makeEmergencyCall(String number, BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return ListTile(
-            leading: Icon(Icons.call, color: Colors.white,),
-            title: Text('make call', style: TextStyle(color: Colors.white),),
-            onTap: () => UrlLauncher.launch(number),
-          );
-        }, backgroundColor: Color(0xff2c3e50),);
+      context: context,
+      builder: (context) {
+        return ListTile(
+          leading: Icon(
+            Icons.call,
+            color: Colors.white,
+          ),
+          title: Text(
+            'make call',
+            style: TextStyle(color: Colors.white),
+          ),
+          onTap: () => UrlLauncher.launch(number),
+        );
+      },
+      backgroundColor: Color(0xff2c3e50),
+    );
   }
 
   Widget _buildRodsStats(double ratio, Color color) {
-    return Container(height: 15, width: MediaQuery.of(context).size.width * ratio, decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0), color: color,),);
+    return Container(
+      height: 15,
+      width: MediaQuery.of(context).size.width * ratio,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        color: color,
+      ),
+    );
   }
 
-   Widget _buildCaseRodStats(Color color) {
-    return Container(height: 18.0, width: 18.0, decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.0), color: color,),);
+  Widget _buildCaseRodStats(Color color) {
+    return Container(
+      height: 18.0,
+      width: 18.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4.0),
+        color: color,
+      ),
+    );
   }
 
- 
-
-  Widget _buildWorldStatistics({int confirmedCases, int recoveredCases, int deathsCount}) {
+  Widget _buildWorldStatistics(
+      {int confirmedCases, int recoveredCases, int deathsCount}) {
     String confirmed = NumberFormat().format(confirmedCases);
     String recovered = NumberFormat().format(recoveredCases);
     String deaths = NumberFormat().format(deathsCount);
     return Container(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    mainAxisSize: MainAxisSize.max,
-    children: <Widget>[
-      Text(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Text(
             'Global Statistics',
             style: TextStyle(
                 color: Color(0xffc0392b),
                 fontWeight: FontWeight.bold,
                 fontSize: 22.0),
           ),
-          SizedBox(height: 10.0,),
-      FittedBox(
-              child: Row(children: <Widget>[
-          _buildRodsStats(0.6, Color(0xfff1c40f),),
-          SizedBox(width: 5.0,),
-          _buildRodsStats(0.3, Color(0xff27ae60),),
-          SizedBox(width: 5.0,),
-          _buildRodsStats(0.1, Color(0xffc0392b),),
-        ],),
-      ),
-      SizedBox(height: 10.0,),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Confirmed', style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold,),),
-          SizedBox(width: 40,),
-          Text('$confirmed', style: TextStyle(fontSize: 23.0),),
-          //Container(width: 30.0, height: 30.0, color: Color(0xfff1c40f),),
-          //_buildRodsStats(0.2, Color(0xfff1c40f), height:30.0, width:30.0),
-          _buildCaseRodStats(Color(0xfff1c40f)),
+          SizedBox(
+            height: 10.0,
+          ),
+          FittedBox(
+            child: Row(
+              children: <Widget>[
+                _buildRodsStats(
+                  0.6,
+                  Color(0xfff1c40f),
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                _buildRodsStats(
+                  0.3,
+                  Color(0xff27ae60),
+                ),
+                SizedBox(
+                  width: 5.0,
+                ),
+                _buildRodsStats(
+                  0.1,
+                  Color(0xffc0392b),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Confirmed',
+                style: TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: 40,
+              ),
+              Text(
+                '$confirmed',
+                style: TextStyle(fontSize: 23.0),
+              ),
+              //Container(width: 30.0, height: 30.0, color: Color(0xfff1c40f),),
+              //_buildRodsStats(0.2, Color(0xfff1c40f), height:30.0, width:30.0),
+              _buildCaseRodStats(Color(0xfff1c40f)),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Recovered',
+                style: TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: 40,
+              ),
+              Text(
+                '$recovered',
+                style: TextStyle(fontSize: 23.0),
+              ),
+              //Container(width: 30.0, height: 30.0, color: Color(0xfff1c40f),),
+              //_buildRodsStats(0.2, Color(0xfff1c40f), height:30.0, width:30.0),
+              _buildCaseRodStats(Color(0xff27ae60)),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Deaths',
+                style: TextStyle(
+                  fontSize: 23.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(
+                width: 40,
+              ),
+              Text(
+                '$deaths',
+                style: TextStyle(fontSize: 23.0),
+              ),
+              //Container(width: 30.0, height: 30.0, color: Color(0xfff1c40f),),
+              //_buildRodsStats(0.2, Color(0xfff1c40f), height:30.0, width:30.0),
+              _buildCaseRodStats(Color(0xffc0392b)),
+            ],
+          ),
+          //Text('*Updated daily'),
         ],
       ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Recovered', style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold,),),
-          SizedBox(width: 40,),
-          Text('$recovered', style: TextStyle(fontSize: 23.0),),
-          //Container(width: 30.0, height: 30.0, color: Color(0xfff1c40f),),
-          //_buildRodsStats(0.2, Color(0xfff1c40f), height:30.0, width:30.0),
-          _buildCaseRodStats(Color(0xff27ae60)),
-        ],
-      ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text('Deaths', style: TextStyle(fontSize: 23.0, fontWeight: FontWeight.bold,),),
-          SizedBox(width: 40,),
-          Text('$deaths', style: TextStyle(fontSize: 23.0),),
-          //Container(width: 30.0, height: 30.0, color: Color(0xfff1c40f),),
-          //_buildRodsStats(0.2, Color(0xfff1c40f), height:30.0, width:30.0),
-          _buildCaseRodStats(Color(0xffc0392b)),
-        ],
-      ),
-    ],
-        ),
-      );
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ScopedModelDescendant(
-        builder: (BuildContext context, Widget child, DataModel model) {
-      Widget page = Container(
-        child: Center(
-          child: Text("Failed to get data..."),
+    return ScopedModelDescendant<MainModel>(
+        builder: (BuildContext context, Widget child, MainModel model) {
+      Widget page = Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text("Failed to get data..."),
+            FlatButton(
+                child: Text('Tap to Reload'),
+                onPressed: () {
+                  model.fetchData();
+                }),
+          ],
         ),
       );
       if (model.isLoading) {
@@ -348,7 +434,7 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20.0,
               ),
-              _buildWorldStatistics(confirmedCases: 782365, recoveredCases: 166041, deathsCount: 37820),
+              _buildWorldStatistics(confirmedCases: model.allCases, recoveredCases: model.allRecovered, deathsCount: model.allDeaths), 
               SizedBox(
                 height: 20.0,
               ),
@@ -428,9 +514,9 @@ class _HomeState extends State<Home> {
                       loadingBuilder: _imagerLoader,
                     ),
                     Image.network(
-                        img3,
-                        loadingBuilder: _imagerLoader,
-                      ),
+                      img3,
+                      loadingBuilder: _imagerLoader,
+                    ),
                   ],
                 ),
               )

@@ -3,7 +3,7 @@ import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'dart:math' as math;
 import 'package:scoped_model/scoped_model.dart';
 
-import '../scoped_model/model.dart';
+import '../scoped_model/main.dart';
 import '../model/data_model.dart';
 
 class RegionalStats extends StatefulWidget {
@@ -69,8 +69,19 @@ class _RegionalStatsState extends State<RegionalStats> {
                 color: Color(0xffecf0f1),
               ),
               height: 300.0,
-              child: ScopedModelDescendant(builder: (BuildContext context, Widget child, DataModel model) {
-                return _buildChart(model.getAllCases);
+              child: ScopedModelDescendant<MainModel>(builder: (BuildContext context, Widget child, MainModel model) {
+                return model.getAllCases.length > 0 ? _buildChart(model.getAllCases) : Center(child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text('Failed to load chart..'),
+                    FlatButton(
+                      child: Text('Tap to Reload data'),
+                      onPressed: () {
+                        model.fetchData();
+                      },
+                    ),
+                  ],
+                ),);
               }),
             ),
             Text(

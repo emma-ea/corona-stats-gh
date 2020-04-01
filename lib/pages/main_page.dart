@@ -6,10 +6,12 @@ import 'about_covid19.dart';
 import 'search_globally.dart';
 
 import '../scoped_model/model.dart';
+import '../about_text_corona.dart';
 
 class MainPage extends StatefulWidget {
   final DataModel _model;
-  MainPage(this._model);
+  final Function _toggleMenu;
+  MainPage(this._model,this. _toggleMenu);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -18,6 +20,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   int _currentPageIndex = 0;
   PageController _controller = PageController();
+  AboutInfo _aboutInfo = AboutInfo();
 
   @override
   void initState() {
@@ -33,32 +36,32 @@ class _MainPageState extends State<MainPage> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8.0),
             ),
-            title: Text('About this Data'),
+            title: Text('${_aboutInfo.aboutData}'),
             content: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'It changes rapidly',
+                    '${_aboutInfo.aboutTitle1}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 8.0,
                   ),
                   Text(
-                    'This data changes rapidly, so what’s shown may be out of date. Table totals may not always represent an accurate sum. Information about reported cases is also available on the World Health Organisation site.',
+                    '${_aboutInfo.aboutBody1}',
                     textAlign: TextAlign.justify,
                   ),
                   SizedBox(height: 12.0),
                   Text(
-                    'It doesn’t include all cases',
+                    '${_aboutInfo.aboutTitle2}',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   SizedBox(
                     height: 8.0,
                   ),
                   Text(
-                    'Confirmed cases aren’t all cases. They only include people who tested positive. Testing rules and availability vary by country',
+                    '${_aboutInfo.aboutBody2}',
                     textAlign: TextAlign.justify,
                   ),
                 ],
@@ -93,11 +96,13 @@ class _MainPageState extends State<MainPage> {
           ),
           onPressed: () {
             widget._model.toggleSetter();
+            widget._toggleMenu();
             print('menu toggled: ${widget._model.isToggleState}');
           },
         ),
         title: RichText(
-          text: TextSpan(children: [
+          text: TextSpan(
+            children: [
             TextSpan(
               text: 'Corona',
               style: TextStyle(
