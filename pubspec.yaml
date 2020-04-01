@@ -17,6 +17,7 @@ dependencies:
   charts_flutter: ^0.9.0
   url_launcher: ^5.4.2
   cached_network_image: ^2.0.0
+  html: ^0.14.0+3
 
   cupertino_icons: ^0.1.2
 
@@ -29,11 +30,8 @@ flutter:
   uses-material-design: true
 
   assets:
-   - assets/images/menu.png
    - assets/images/menu2.png
    - assets/images/help.png
-   - assets/images/broken_image.gif
-
   
   fonts:
     - family: Nunito
