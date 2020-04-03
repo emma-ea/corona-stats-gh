@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 import '../scoped_model/model.dart';
 import '../model/data_model.dart';
-import '../scrapper/scrape_page.dart';
+import '../scrapper/scrape_page.dart' as ScrapePage2;
 import '../scoped_model/main.dart';
 
 class Home extends StatefulWidget {
@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   String img3 =
       'https://www.who.int/images/default-source/health-topics/coronavirus/wearing-gloves.png';
 
-  ScrapePage scrapePage = ScrapePage();
+  ScrapePage2.ScrapePage scrapeP = ScrapePage2.ScrapePage();
 
   Widget _buildTotalCases(CasesModel caseData) {
     String cases = NumberFormat().format(caseData.totalCases).toString();
@@ -434,7 +434,15 @@ class _HomeState extends State<Home> {
               SizedBox(
                 height: 20.0,
               ),
-              _buildWorldStatistics(confirmedCases: model.allCases, recoveredCases: model.allRecovered, deathsCount: model.allDeaths), 
+              _buildWorldStatistics(
+                  confirmedCases: model.allCases ?? 0,
+                  recoveredCases: model.allRecovered ?? 0,
+                  deathsCount: model.allDeaths ?? 0), 
+              /*_buildWorldStatistics(
+                confirmedCases: scrapeP.allCases ?? 0,
+                recoveredCases: scrapeP.allRecovered ?? 0,
+                deathsCount: scrapeP.allDeaths ?? 0
+              ), */
               SizedBox(
                 height: 20.0,
               ),

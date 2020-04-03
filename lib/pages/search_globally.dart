@@ -49,7 +49,7 @@ class _SearchGloballyState extends State<SearchGlobally> {
        SingleChildScrollView(
          child: Column(
            children: <Widget>[
-             Text('something')
+             
            ],
          ),
        ),

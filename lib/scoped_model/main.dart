@@ -2,6 +2,4 @@ import 'model.dart';
 
 import 'package:scoped_model/scoped_model.dart';
 
-class MainModel extends Model with ParentModel, ScrapePage, DataModel {
-
-}
+class MainModel extends Model with ParentModel, ScrapePage, DataModel {}

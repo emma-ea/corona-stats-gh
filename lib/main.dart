@@ -6,38 +6,33 @@ import 'pages/main_page.dart';
 import 'pages/displacement_menu.dart';
 import 'scoped_model/main.dart';
 
+import 'scrapper/scrape_page.dart' as ScrapePage2;
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+class _MyAppState extends State<MyApp>{
   final MainModel _model = MainModel();
-  AnimationController _controller;
+ 
 
-  final int maxSlide = 225;
+
+
+  ScrapePage2.ScrapePage scrapeP = ScrapePage2.ScrapePage();
 
   @override
   void initState() {
     super.initState();
+    _model.getData();    //_model.getRegionsData();
+    //scrapeP.getData();
     
-    _model.getData();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 250),
-    );
-  }
-
-  void toggleMenu() {
-    print('toggle');
-    _controller.isDismissed ? _controller.forward() : _controller.reverse();
   }
 
   @override
   Widget build(BuildContext context) {
-    double slide = maxSlide * _controller.value;
-    double scale = 1 - (_controller.value * 0.3);
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -46,23 +41,13 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
       ),
       home: ScopedModel<MainModel>(
         model: _model,
-        child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              return Stack(
+        child: Stack(
                 children: <Widget>[
                   DisplacementMenu(),
-                  Transform(
-                    transform: Matrix4.identity()
-                      ..scale(scale)
-                      ..translate(slide),
-                    alignment: Alignment.centerLeft,
-                    child: MainPage(_model, toggleMenu),
-                  ),
-                ],
-              );
-            }),
-      ),
+                    MainPage(_model),
+                  
+                ]),
+    ),
     );
   }
 }
