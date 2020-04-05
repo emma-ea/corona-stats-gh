@@ -115,7 +115,7 @@ class _DisplacementMenuState extends State<DisplacementMenu> {
               Text('Menu', style: TextStyle(color: Colors.white, fontSize: 54.0, fontWeight: FontWeight.bold,),),
               SizedBox(height: 30.0,),
               ListTile(leading: Icon(Icons.healing, color: Colors.white,), title: Text('Stay safe tips', style: TextStyle(color: Colors.white),),onTap: () {
-              mainPage.releaseDrawerAnimController();
+              //mainPage.releaseDrawerAnimController();
                 // stay safe tips
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) {

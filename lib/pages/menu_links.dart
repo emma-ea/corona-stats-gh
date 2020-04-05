@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class MenuLinks extends StatefulWidget {
   
@@ -17,7 +18,10 @@ class _MenuLinksState extends State<MenuLinks> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Text('menu\n${widget.url}'),
+        child: WebView(
+          javascriptMode: JavascriptMode.unrestricted,
+          initialUrl: widget.url,
+        ),
       ),
     );
   }
