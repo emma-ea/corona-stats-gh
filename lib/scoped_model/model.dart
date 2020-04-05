@@ -1,3 +1,4 @@
+import 'package:corona_tracker_gh/model/global_model.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/parser.dart' as parser;
@@ -116,6 +117,10 @@ class ScrapePage extends ParentModel {
   List<String> regionsCritical = [];
   List<String> regionsDeaths = [];
 
+  List<GlobalModel> _globalModel = [];
+
+  List<GlobalModel> get globalModelData => List.of(_globalModel);
+
   List<RegionModel> regionModelData = [];
 
   final String _url = "https://www.worldometers.info/coronavirus/";
@@ -134,6 +139,40 @@ class ScrapePage extends ParentModel {
           document.getElementsByClassName("maincounter-number")[1];
       dom.Element recovered =
           document.getElementsByClassName("maincounter-number")[2];
+      
+      // th, tb, tr, td
+      dom.Element tableStats = 
+          document.getElementsByTagName("tbody")[0];
+
+      tableStats.getElementsByTagName("tr").forEach((dom.Element td) {
+        print('global cases...');
+        List<String> dataString = td.text.split("\n");
+        GlobalModel globalModel = GlobalModel(
+          // first item [0] is empty
+          dataString[1],
+          dataString[2],
+          dataString[3],
+          dataString[4],
+          dataString[5],
+          dataString[6],
+          dataString[7],
+          dataString[8],
+        );
+        print('country: ' + dataString[1]);
+        _globalModel.add(globalModel);
+      });
+      
+      print('countries');
+      print(_globalModel[0].country);
+      print(_globalModel[0].totalCases);
+      print(_globalModel[0].newCases);
+      print(_globalModel[0].totalDeaths);
+      print(_globalModel[0].newDeaths);
+      print(_globalModel[0].totalRecovered);
+      print(_globalModel[0].activeCases);
+      print(_globalModel[0].critical);
+
+      
       c = cases.text.toString();
       d = deaths.text.toString();
       r = recovered.text.toString();
